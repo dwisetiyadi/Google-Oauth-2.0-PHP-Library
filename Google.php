@@ -12,6 +12,10 @@
 
 // ------------------------------------------------------------------------
 
+if (!function_exists('curl_init')) {
+	throw new Exception('This library needs the CURL PHP extension.');
+}
+
 /**
  * This class object
  */
