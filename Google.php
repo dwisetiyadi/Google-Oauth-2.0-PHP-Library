@@ -22,6 +22,7 @@ class Google {
 	var $scope;
 	var $response_type = 'code';
 	var $ccode;
+	var $endpoint = 'https://accounts.google.com/o/oauth2';
 
 	/**
 	 * Constructor
@@ -64,7 +65,7 @@ class Google {
 	 * @return void
 	 */
 	function authorize() {
-		$uri = 'https://accounts.google.com/o/oauth2/auth?';
+		$uri = trim($this->endpoint, '/').'/auth?';
 		$uri .= 'client_id='.$this->cid.'&';
 		$uri .= 'redirect_uri='.$this->redirect_uri.'&';
 		$uri .= 'scope='.$this->scope.'&';
@@ -91,7 +92,7 @@ class Google {
 	 * @return void
 	 */
 	function token() {
-		$uri = 'https://accounts.google.com/o/oauth2/token';
+		$uri = trim($this->endpoint, '/').'/token';
 		$attachment['code'] = $this->ccode;
 		$attachment['client_id'] = $this->cid;
 		$attachment['client_secret'] = $this->csecret;
@@ -130,7 +131,7 @@ class Google {
 	 * @return void
 	 */
 	function refreshtoken($refreshtoken = '') {
-		$uri = 'https://accounts.google.com/o/oauth2/token';
+		$uri = '/token';
 		$attachment['client_id'] = $this->cid;
 		$attachment['client_secret'] = $this->csecret;
 		$attachment['refresh_token'] = $refreshtoken;
@@ -157,7 +158,7 @@ class Google {
 	 * @param array attachment
 	 * @return string
 	 */
-	public function get($url = '') {
+	public function call($url = '') {
 		$ch = curl_init();
 		
 		curl_setopt($ch, CURLOPT_URL, $url);
