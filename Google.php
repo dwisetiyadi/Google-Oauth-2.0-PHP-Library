@@ -7,7 +7,7 @@
  * @license		http://www.gnu.org/licenses/gpl.html
  * @link		http://dwi.web.id
  * @version		1
- * Last changed	5 August, 2011
+ * Last changed	2 Jan, 2012
  */
 
 // ------------------------------------------------------------------------
@@ -27,7 +27,11 @@ class Google {
 	 * Constructor
 	 * Configure API setting
 	 */
-	function google($params = array()) {
+	function Google($params = array()) {
+		$this->initialize($params);
+	}
+	
+	function initialize($params = array()) {
 		if (isset($params['client_id'])) $this->cid = $params['client_id'];
 		if (isset($params['client_secret'])) $this->csecret = $params['client_secret'];
 		if (isset($params['redirect_uri'])) $this->redirect_uri = $params['redirect_uri'];
