@@ -206,4 +206,5 @@ class Google {
 		return $result;
 	}
 }
-?>
+
+/* end of file */
