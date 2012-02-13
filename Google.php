@@ -23,7 +23,7 @@ class Google {
 	var $cid;
 	var $csecret;
 	var $redirect_uri;
-	var $scope;
+	var $scope = 'https://www.googleapis.com/auth/userinfo.profile';
 	var $response_type = 'code';
 	var $ccode;
 	var $endpoint = 'https://accounts.google.com/o/oauth2';
@@ -40,8 +40,20 @@ class Google {
 		if (isset($params['client_id'])) $this->cid = $params['client_id'];
 		if (isset($params['client_secret'])) $this->csecret = $params['client_secret'];
 		if (isset($params['redirect_uri'])) $this->redirect_uri = $params['redirect_uri'];
-		if (isset($params['scope'])) $this->scope = 'https://www.google.com/'.$params['scope'];
 		if (isset($params['response_type'])) $this->response_type = $params['response_type'];
+		
+		/**
+		 * Multiple scopes may be required
+		 */
+		if (isset($params['scope'])) {
+			if (is_string($params['scope'])) {
+				$params['scope'] = preg_split('@ +@',trim($params['scope']));
+			}
+			
+			if (is_array($params['scope']) && count($params['scope'])) {
+				$this->scope = 'https://www.googleapis.com/' . join(' https://www.googleapis.com/',$params['scope']);
+			}
+		}
 	}
 
 	// --------------------------------------------------------------------
